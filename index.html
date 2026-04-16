@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>TOFU · ChatGPT & Telegram 会员代开</title>
+    <style>
+        /* ========== 白蓝色未来感主题 ========== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(135deg, #f0f6ff 0%, #e8f0fe 50%, #ffffff 100%);
+            color: #1a2b4c;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.5;
+            padding: 24px 20px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .page {
+            max-width: 1180px;
+            width: 100%;
+        }
+
+        .gradient-bar {
+            height: 4px;
+            background: linear-gradient(90deg, #3b82f6, #06b6d4, #60a5fa);
+            border-radius: 4px 4px 0 0;
+            margin-bottom: 32px;
+            box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
+        }
+
+        .hero {
+            margin-bottom: 48px;
+        }
+
+        .pre-title {
+            color: #3b82f6;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            font-size: 0.9rem;
+            margin-bottom: 12px;
+            text-transform: uppercase;
+            text-shadow: 0 0 10px rgba(59, 130, 246, 0.2);
+        }
+
+        h1 {
+            font-size: 3.2rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            line-height: 1.2;
+            margin-bottom: 16px;
+            background: linear-gradient(135deg, #1e3a5f 0%, #3b82f6 50%, #06b6d4 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .contact-row {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+            flex-wrap: wrap;
+            margin: 20px 0 16px;
+        }
+
+        .tg-link {
+            background: linear-gradient(135deg, #ffffff, #f0f7ff);
+            padding: 12px 26px;
+            border-radius: 60px;
+            border: 1.5px solid #3b82f6;
+            color: #1e4a8b;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.15);
+        }
+
+        .tg-link:hover {
+            background: #3b82f6;
+            color: white;
+            border-color: #3b82f6;
+            box-shadow: 0 8px 25px rgba(59, 130, 246, 0.35);
+            transform: translateY(-2px);
+        }
+
+        .channel-link {
+            color: #4a7ab5;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        .channel-link:hover {
+            color: #1e4a8b;
+        }
+
+        .subhead {
+            font-size: 1.2rem;
+            color: #3a5a7a;
+            max-width: 700px;
+            border-left: 4px solid #3b82f6;
+            padding-left: 20px;
+            margin: 24px 0;
+            background: linear-gradient(90deg, rgba(59,130,246,0.05), transparent);
+        }
+
+        .tag-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px 32px;
+            margin-top: 24px;
+        }
+
+        .tag {
+            color: #2a5a8c;
+            font-weight: 500;
+            background: rgba(255,255,255,0.7);
+            padding: 6px 16px;
+            border-radius: 30px;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(59,130,246,0.2);
+        }
+
+        .tag::before {
+            content: "✔";
+            color: #3b82f6;
+            margin-right: 8px;
+            font-weight: 700;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 650;
+            letter-spacing: 0.5px;
+            margin: 48px 0 24px;
+            text-transform: uppercase;
+            color: #1e3a5f;
+            border-bottom: 2px solid #cde0f5;
+            padding-bottom: 12px;
+        }
+
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+        }
+
+        .service-card {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            border: 1.5px solid rgba(59, 130, 246, 0.2);
+            border-radius: 28px;
+            padding: 28px 24px;
+            transition: all 0.25s ease;
+            box-shadow: 0 10px 30px -8px rgba(30, 58, 95, 0.1);
+        }
+
+        .service-card:hover {
+            border-color: #3b82f6;
+            box-shadow: 0 25px 40px -12px rgba(59, 130, 246, 0.25);
+            background: white;
+            transform: translateY(-4px);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 24px;
+        }
+
+        .card-icon {
+            font-size: 2.4rem;
+        }
+
+        .card-header h3 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #1a2b4c;
+        }
+
+        .price-block {
+            margin: 20px 0 16px;
+            background: linear-gradient(135deg, #f5faff, #ffffff);
+            padding: 14px 16px;
+            border-radius: 18px;
+            border-left: 4px solid #3b82f6;
+            box-shadow: inset 0 1px 3px rgba(0,0,0,0.02);
+        }
+
+        .price-highlight {
+            font-size: 1.6rem;
+            font-weight: 750;
+            color: #1e4a8b;
+        }
+
+        .feature-list {
+            list-style: none;
+            margin: 22px 0 12px;
+        }
+
+        .feature-list li {
+            padding: 8px 0;
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            border-bottom: 1px dashed #cde0f5;
+            color: #2a4a6a;
+        }
+
+        .feature-list li::before {
+            content: "✔";
+            color: #3b82f6;
+            font-weight: bold;
+        }
+
+        .card-note {
+            margin-top: 20px;
+            color: #5a7a9a;
+            font-style: italic;
+        }
+
+        .price-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid #dce8f5;
+        }
+
+        .why-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 24px;
+            margin: 30px 0;
+        }
+
+        .why-item {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(8px);
+            border-radius: 24px;
+            padding: 24px 20px;
+            border: 1.5px solid rgba(59, 130, 246, 0.15);
+            transition: all 0.2s;
+        }
+
+        .why-item:hover {
+            background: white;
+            border-color: #60a5fa;
+            box-shadow: 0 10px 25px -5px rgba(59,130,246,0.15);
+        }
+
+        .why-item h4 {
+            font-size: 1.3rem;
+            margin-bottom: 12px;
+            color: #1e3a5f;
+        }
+
+        .final-cta {
+            background: linear-gradient(145deg, #ffffff, #f0f7ff);
+            border: 2px solid #3b82f6;
+            border-radius: 36px;
+            padding: 40px 36px;
+            margin: 48px 0 32px;
+            text-align: center;
+            box-shadow: 0 20px 40px -10px rgba(59, 130, 246, 0.2);
+        }
+
+        .cta-title {
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin-bottom: 16px;
+            color: #1a2b4c;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: linear-gradient(135deg, #3b82f6, #06b6d4);
+            color: white;
+            font-weight: 700;
+            padding: 16px 38px;
+            border-radius: 60px;
+            text-decoration: none;
+            font-size: 1.2rem;
+            margin: 20px 0 16px;
+            border: none;
+            transition: all 0.25s;
+            box-shadow: 0 10px 25px rgba(59, 130, 246, 0.3);
+        }
+
+        .cta-button:hover {
+            background: linear-gradient(135deg, #2563eb, #0891b2);
+            box-shadow: 0 15px 35px rgba(59, 130, 246, 0.45);
+            transform: scale(1.02);
+        }
+
+        .footer {
+            margin-top: 40px;
+            color: #5a7a9a;
+            border-top: 1.5px solid #cde0f5;
+            padding-top: 28px;
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+
+        .resource-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px,1fr));
+            gap: 16px;
+        }
+
+        .resource-card {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(5px);
+            padding: 16px;
+            border-radius: 18px;
+            border: 1.5px solid rgba(59, 130, 246, 0.15);
+        }
+
+        @media (max-width: 600px) {
+            h1 { font-size: 2.4rem; }
+            .hero { margin-bottom: 30px; }
+            .final-cta { padding: 28px 18px; }
+        }
+
+        a { color: #3b82f6; }
+    </style>
+</head>
+<body>
+<div class="page">
+    <div class="gradient-bar"></div>
+
+    <div class="hero">
+        <div class="pre-title">chatgpt · telegram 会员服务</div>
+        <h1>会员开通与<br>数字服务</h1>
+        <div class="contact-row">
+            <a href="https://t.me/wzoso" class="tg-link" target="_blank">✈️ 联系TG：@wzoso</a>
+            <a href="https://t.me/wzoso_channel" class="channel-link" target="_blank">📢 频道：@wzoso_channel</a>
+        </div>
+        <div class="subhead">
+            稳定渠道提供 Telegram Premium、Stars、ChatGPT Plus / Pro 等服务， 支持单开 / 批量 / 长期合作
+        </div>
+        <div class="tag-group">
+            <span class="tag">支持单开</span>
+            <span class="tag">支持批量</span>
+            <span class="tag">支持长期合作</span>
+            <span class="tag">问题可沟通</span>
+        </div>
+    </div>
+
+    <div style="display: flex; justify-content: space-between; align-items: center; margin: 20px 0 10px;">
+        <span style="font-size: 1.4rem; font-weight: 600; color:#1e3a5f;">高级服务</span>
+        <span style="background: linear-gradient(135deg,#3b82f6,#60a5fa); padding: 8px 20px; border-radius: 40px; color: white;">📞 Telegram 联系方式</span>
+    </div>
+
+    <div class="section-title">MAIN SERVICES</div>
+    <div class="card-grid">
+        <div class="service-card">
+            <div class="card-header">
+                <span class="card-icon">✈️</span>
+                <h3>Telegram Premium</h3>
+            </div>
+            <p style="color:#2a5a8c; margin-bottom: 10px;">无需上号，提供用户名即可赠送处理，适合日常高频用户。</p>
+            <div class="price-block">
+                <div class="price-row"><span>3个月</span><span class="price-highlight">15U</span></div>
+                <div class="price-row"><span>6个月</span><span class="price-highlight">25U</span></div>
+                <div class="price-row"><span>12个月</span><span class="price-highlight">35U</span></div>
+            </div>
+            <ul class="feature-list">
+                <li>上传更大文件（最高4GB）</li>
+                <li>下载速度更快，减少等待时间</li>
+                <li>更多收藏夹/分组，管理更清晰</li>
+                <li>语音转文字，查看信息更方便</li>
+                <li>去广告体验，使用更干净</li>
+                <li>更高限额，适合重度用户</li>
+            </ul>
+            <div class="card-note">👉 大多数客户都会先开TG会员</div>
+        </div>
+
+        <div class="service-card">
+            <div class="card-header">
+                <span class="card-icon">⭐</span>
+                <h3>Telegram Stars</h3>
+            </div>
+            <div class="price-block">
+                <div class="price-row"><span>50⭐</span><span>2U</span></div>
+                <div class="price-row"><span>100⭐</span><span>3U</span></div>
+                <div class="price-row"><span>150⭐</span><span>5U</span></div>
+                <div class="price-row"><span>250⭐</span><span>7U</span></div>
+                <div class="price-row"><span>350⭐</span><span>8.4U</span></div>
+                <div class="price-row"><span>500⭐</span><span>11.5U</span></div>
+                <div class="price-row"><span>750⭐</span><span>16.5U</span></div>
+                <div class="price-row"><span>1000⭐</span><span>22U</span></div>
+            </div>
+            <ul class="feature-list">
+                <li>给频道/个人购买TG礼物</li>
+                <li>打赏内容创作者/博主</li>
+                <li>购买Telegram机器人服务</li>
+                <li>订阅频道、解锁付费内容</li>
+                <li>引流、互动、提升活跃度</li>
+                <li>小额成本低，日常频繁使用</li>
+            </ul>
+            <div class="card-note">👉 TG项目/机器人必须用Stars</div>
+        </div>
+
+        <div class="service-card">
+            <div class="card-header">
+                <span class="card-icon">🤖</span>
+                <h3>ChatGPT 服务</h3>
+            </div>
+            <div class="price-block">
+                <div class="price-row"><span>Plus</span><span class="price-highlight">25U</span></div>
+                <div class="price-row"><span>Pro</span><span>私聊咨询</span></div>
+                <div class="price-row"><span>Pro x5</span><span>105U</span></div>
+                <div class="price-row"><span>Pro x20</span><span>205U</span></div>
+            </div>
+            <ul class="feature-list">
+                <li>使用GPT-4 / 高级模型</li>
+                <li>响应更快，高峰期稳定</li>
+                <li>更高额度，长期高频使用</li>
+                <li>适合写作、编程、翻译</li>
+                <li>提高效率，节省时间</li>
+            </ul>
+            <div class="card-note">👉 做项目的人都会长期用GPT<br>售后规则下单前确认。</div>
+        </div>
+    </div>
+
+    <div class="section-title">RESOURCES · 老号/老群/老频道</div>
+    <div class="resource-grid">
+        <div class="resource-card">
+            <h4 style="margin-bottom: 12px; color:#1e3a5f;">📺 普通老频道</h4>
+            <div class="price-row"><span>2023</span><span>5U</span></div>
+            <div class="price-row"><span>2022</span><span>7U</span></div>
+            <div class="price-row"><span>2021</span><span>9U</span></div>
+            <div class="price-row"><span>2020</span><span>11U</span></div>
+            <div class="price-row"><span>2019</span><span>15U</span></div>
+        </div>
+        <div class="resource-card">
+            <h4 style="margin-bottom: 12px; color:#1e3a5f;">📢 多帖子老频道</h4>
+            <div class="price-row"><span>2025</span><span>3U</span></div>
+            <div class="price-row"><span>2023</span><span>8U</span></div>
+            <div class="price-row"><span>2022</span><span>10U</span></div>
+            <div class="price-row"><span>2021</span><span>13U</span></div>
+        </div>
+        <div class="resource-card">
+            <h4 style="margin-bottom: 12px; color:#1e3a5f;">👥 老群资源</h4>
+            <div class="price-row"><span>2023</span><span>14U</span></div>
+            <div class="price-row"><span>2022</span><span>30U</span></div>
+            <div class="price-row"><span>2021</span><span>35U</span></div>
+            <div class="price-row"><span>2020</span><span>40U</span></div>
+        </div>
+        <div class="resource-card">
+            <h4 style="margin-bottom: 12px; color:#1e3a5f;">📱 TG老号</h4>
+            <div class="price-row"><span>1年</span><span>2U</span></div>
+            <div class="price-row"><span>2年</span><span>3U</span></div>
+            <div class="price-row"><span>3年</span><span>4U</span></div>
+            <div class="price-row"><span>4年</span><span>5U</span></div>
+            <div class="price-row"><span>5年</span><span>6U</span></div>
+        </div>
+    </div>
+    <ul class="feature-list" style="margin-top: 20px; background: rgba(255,255,255,0.5); backdrop-filter: blur(5px); padding: 18px; border-radius: 20px;">
+        <li>老号信任度更高，不容易被限制</li>
+        <li>老频道更适合做项目、发内容</li>
+        <li>老群更容易用于运营/引流</li>
+        <li>适合做长期账号环境搭建</li>
+        <li>节省从0养号的时间成本</li>
+    </ul>
+    <p style="margin: 12px 0 30px; color: #3a6a9a;">👉 按需求筛选资源（年份/活跃度/用途），具体私聊确认</p>
+
+    <div class="section-title">WHY ME</div>
+    <div class="why-grid">
+        <div class="why-item"><h4>🔒 稳定渠道</h4><p>长期做这类服务，重点是稳定和可持续。</p></div>
+        <div class="why-item"><h4>💬 直接沟通</h4><p>不绕弯，直接联系 @wzoso，确认后再安排。</p></div>
+        <div class="why-item"><h4>🤝 长期合作</h4><p>支持老客户长期合作，也支持批量处理。</p></div>
+        <div class="why-item"><h4>⚡ 问题可处理</h4><p>有问题直接联系，能沟通、能反馈、能处理。</p></div>
+    </div>
+
+    <div class="final-cta">
+        <div class="cta-title">现在联系 @wzoso，确认后再安排处理</div>
+        <p style="color: #3a6a9a; max-width: 600px; margin: 0 auto;">价格会随市场波动，建议先联系确认。支持单开、批量与长期合作。</p>
+        <p style="background: rgba(59,130,246,0.1); display: inline-block; padding: 8px 24px; border-radius: 40px; margin: 20px 0; border:1px solid rgba(59,130,246,0.3);">⚠️ 每天处理数量有限，建议先联系确认</p>
+        <div style="display: flex; flex-wrap: wrap; gap: 20px; justify-content: center; margin: 30px 0 10px; color:#1e4a8b;">
+            <div>✓ 先确认需求</div>
+            <div>✓ 报价清楚</div>
+            <div>✓ 支持合作</div>
+            <div>✓ 直接TG</div>
+        </div>
+        <a href="https://t.me/wzoso" class="cta-button" target="_blank">✈️ 联系 @wzoso 开通</a>
+        <p style="margin-top: 24px; color:#4a7ab5;">看到合适就直接联系，不用来回找人。</p>
+    </div>
+
+    <div class="footer">
+        <span>© 2026 TOFU Premium · Telegram：<a href="https://t.me/wzoso">https://t.me/wzoso</a></span>
+        <span>先联系确认，再安排处理</span>
+    </div>
+</div>
+</body>
+</html>
